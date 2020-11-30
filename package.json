@@ -1,0 +1,22 @@
+{
+  "name": "itsallreal",
+  "version": "1.0.0",
+  "description": "Its all real - Q",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UndecidedTech/itsallreal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UndecidedTech/itsallreal/issues"
+  },
+  "homepage": "https://github.com/UndecidedTech/itsallreal#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
