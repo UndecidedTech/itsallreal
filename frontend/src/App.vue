@@ -14,10 +14,7 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#">
-                  <span data-feather="home"></span>
-                  Dashboard <span class="sr-only">(current)</span>
-                </a>
+                <h3 class="pl-3 ml-2 mr-5 border rounded">Articles</h3>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">
