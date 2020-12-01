@@ -1,97 +1,102 @@
 <template>
-    <div id="map">
-      <p>BRAN IS RENDER</p>
-      <svg ref="svg" height="300" width="500">
-      <path
-      v-for="state in stateData"
-      :key="state.feature.id"
-      :d="pathGenerator(state.feature)"
-      :style="{
-        fill: state.color,
-        stroke: 'darkslategray'
-      }"
-    />
-    </svg>
-    </div>
+  <div class="">
+    <radio-svg-map :map="USA" v-model="selectedLocation" :location-class="getLocationClass"/>
+  </div>
 </template>
 
-// https://youtu.be/G-VggTK-Wlg
-
 <script>
-import * as d3 from 'd3'
-import axios from 'axios'
+import { RadioSvgMap } from 'vue-svg-map'
+import USA from '@svg-maps/usa'
+
 export default {
   name: 'UsaMap',
+  components: {
+    RadioSvgMap
+  },
   data () {
     return {
-      statesJson: null,
-      redStates: [],
-      blueStates: [],
-      swingStates: []
+      statesRef: [
+        { state: 'HI', status: 'blue' },
+        { state: 'UT', status: 'red' },
+        { state: 'MN', status: 'blue' },
+        { state: 'CA', status: 'blue' },
+        { state: 'NJ', status: 'blue' },
+        { state: 'ID', status: 'red' },
+        { state: 'MA', status: 'blue' },
+        { state: 'MD', status: 'blue' },
+        { state: 'NE', status: 'red' },
+        { state: 'CT', status: 'blue' },
+        { state: 'IA', status: 'red' },
+        { state: 'ND', status: 'red' },
+        { state: 'NV', status: 'grey' },
+        { state: 'VA', status: 'blue' },
+        { state: 'NY', status: 'blue' },
+        { state: 'DE', status: 'blue' },
+        { state: 'GA', status: 'grey' },
+        { state: 'AZ', status: 'grey' },
+        { state: 'CO', status: 'blue' },
+        { state: 'VT', status: 'blue' },
+        { state: 'WA', status: 'blue' },
+        { state: 'NH', status: 'blue' },
+        { state: 'TX', status: 'red' },
+        { state: 'IL', status: 'blue' },
+        { state: 'WI', status: 'blue' },
+        { state: 'PA', status: 'grey' },
+        { state: 'SD', status: 'red' },
+        { state: 'FL', status: 'red' },
+        { state: 'SC', status: 'red' },
+        { state: 'NC', status: 'red' },
+        { state: 'MT', status: 'red' },
+        { state: 'KS', status: 'red' },
+        { state: 'RI', status: 'blue' },
+        { state: 'WY', status: 'red' },
+        { state: 'IN', status: 'red' },
+        { state: 'MI', status: 'blue' },
+        { state: 'OH', status: 'red' },
+        { state: 'ME', status: 'blue' },
+        { state: 'OR', status: 'blue' },
+        { state: 'NM', status: 'blue' },
+        { state: 'MO', status: 'red' },
+        { state: 'TN', status: 'red' },
+        { state: 'OK', status: 'red' },
+        { state: 'AL', status: 'red' },
+        { state: 'KY', status: 'red' },
+        { state: 'LA', status: 'red' },
+        { state: 'MS', status: 'red' },
+        { state: 'AK', status: 'red' },
+        { state: 'AR', status: 'red' },
+        { state: 'WV', status: 'red' }
+      ],
+      USA,
+      selectedLocation: null
     }
   },
   methods: {
-    async loadJson () {
-      const res = await axios.get('https://api.github.com/gists/e0d1b7950ced31369c903bed0cead7b1')
-      this.statesJson = JSON.parse(res.data.files['us_features.json'].content)
-    }
-  },
-  computed: {
-    // Typical projection for showing all states scaled and positioned appropriately
-    projection () {
-      return d3.geoAlbersUsa().scale(600).translate([250, 150])
-    },
-
-    // Function for converting GPS coordinates into path coordinates
-    pathGenerator () {
-      return d3.geoPath().projection(this.projection)
-    },
-    stateData () {
-      return this.statesJson ? this.statesJson.features.map(feature => {
-        return {
-          feature,
-          color: '#FF000'
+    getLocationClass (location, index) {
+      // set Red or Blue
+      let state
+      console.log('locationID: ', location.id)
+      for (let i = 0; i < this.statesRef.length; i++) {
+        if (this.statesRef[i].state === location.id.toUpperCase()) {
+          state = this.statesRef[i]
+          console.log('state: ', state, state.status)
+          if (state.status === 'red') {
+            return 'svg-map__red'
+          } else if (state.status === 'blue') {
+            return 'svg-map__blue'
+          } else {
+            return 'svg-map__grey'
+          }
         }
-      }) : []
-    },
-    // stateData () {
-    //   return this.statesJson ? this.statesJson.features.map(feature => {
-    //     const state = this.happiestStates.find(state => state.state === feature.id)
-    //     return {
-    //       feature,
-    //       color: this.stateColor(state.rank)
-    //     }
-    //   }) : []
-    // },
-    // cityData () {
-    //   return this.happiestCities.map(city => {
-    //     return {
-    //       city: city.city,
-    //       x: this.projection([city.lng, city.lat])[0],
-    //       y: this.projection([city.lng, city.lat])[1],
-    //       color: this.cityColor(city.rank),
-    //       size: this.citySize(city.rank)
-    //     }
-    //   })
-    // },
-    // stateColor () {
-    //   return d3.scaleSequential().domain([50, 1]).interpolator(d3.interpolateRdYlGn)
-    // },
-
-    cityColor () {
-      return d3.scaleLinear().domain([20, 1]).range(['#32a852', '#10732b'])
-    },
-
-    citySize () {
-      return d3.scaleLinear().domain([20, 1]).range([5, 15])
+      }
     }
   },
-  created () {
-    this.loadJson()
+  mounted () {
+    console.log(this.USA)
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style src="vue-svg-map/dist/index.css">
 
 </style>
