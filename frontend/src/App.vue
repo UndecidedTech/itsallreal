@@ -16,34 +16,10 @@
               <li class="nav-item">
                 <h3 class="pl-3 ml-2 mr-5 border rounded">Articles</h3>
               </li>
-              <li class="nav-item">
+              <li v-for="(article, index) in articles" :key="index" class="nav-item border rounded border-secondary mr-2 ml-2">
                 <a class="nav-link" href="#">
                   <span data-feather="file"></span>
-                  Orders
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="shopping-cart"></span>
-                  Products
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="users"></span>
-                  Customers
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="bar-chart-2"></span>
-                  Reports
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="layers"></span>
-                  Integrations
+                  {{ article.title }}
                 </a>
               </li>
             </ul>
@@ -54,39 +30,22 @@
                 <span data-feather="plus-circle"></span>
               </a>
             </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Current month
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Social engagement
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Year-end sale
-                </a>
-              </li>
-            </ul>
           </div>
         </nav>
 
         <main role="main" class="col-md-8 ml-sm-auto col-lg-8">
-          <usa-map class="mapStyle" width="600" height="400" ></usa-map>
-          <div class="col-md-7 ml-sm-auto col-lg-10" v-for="(tweet, index) in tweets" :key="index">
-            <p>tweet.text</p>
+          <usa-map class="mapStyle" width="400" height="300" ></usa-map>
+          <div class="pl-4 pr-4 border rounded border-secondary chat">
+            <div v-for="(tweet, index) in tweets" :key="index" class="card border-primary mt-3 mb-3" style="min-width:100%;">
+              <div class="card-header">
+                <div class="icon-container d-inline">
+                  <img :src="tweet.avi || 'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg'"/>
+                </div>
+                {{ tweet.author }}</div>
+                <div class="card-body text-primary">
+                  <p class="card-text">{{ tweet.text }}</p>
+                </div>
+              </div>
           </div>
         </main>
         <nav class="col-md-2 d-none d-md-block bg-light navbar-right">
@@ -98,34 +57,10 @@
                   Dashboard <span class="sr-only">(current)</span>
                 </a>
               </li>
-              <li class="nav-item">
+              <li v-for="(state, index) in states" :key="index" class="nav-item">
                 <a class="nav-link" href="#">
                   <span data-feather="file"></span>
-                  Orders
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="shopping-cart"></span>
-                  Products
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="users"></span>
-                  Customers
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="bar-chart-2"></span>
-                  Reports
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="layers"></span>
-                  Integrations
+                  {{ article.title }}
                 </a>
               </li>
             </ul>
@@ -136,32 +71,6 @@
                 <span data-feather="plus-circle"></span>
               </a>
             </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Current month
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Social engagement
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Year-end sale
-                </a>
-              </li>
-            </ul>
           </div>
         </nav>
       </div>
@@ -176,8 +85,28 @@ export default {
   },
   data () {
     return {
+      articles: [{
+        title: 'Trump Case Makes Supreme Court'
+      }],
       tweets: [{
-        text: 'This is from Nate Silver'
+        text: 'This is from Nate Silver',
+        author: '@Natesilver537'
+      },
+      {
+        text: 'This is from Nate Silver',
+        author: '@Natesilver537'
+      },
+      {
+        text: 'This is from Nate Silver',
+        author: '@Natesilver537'
+      },
+      {
+        text: 'This is from Nate Silver',
+        author: '@Natesilver537'
+      },
+      {
+        text: 'This is from Nate Silver',
+        author: '@Natesilver537'
       }]
     }
   }
@@ -196,6 +125,31 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.chat {
+  overflow-y: auto;
+  margin: 0 auto;
+  height: 40vh;
+  width: 60vw;
+  word-wrap: break-word;
+  border:lightslategrey;
+  border-style: solid;
+}
+.icon-container {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
+
+.icon-container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+  max-height: 60px;
+  overflow: hidden;
+  width: auto;
 }
 
 .navbar-right {
