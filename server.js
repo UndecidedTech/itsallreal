@@ -44,7 +44,8 @@ mongoose.set("useCreateIndex", true);
 const port = process.env.PORT || 3000;
 
 // Import routes
-
+const tweets = require("./routes/tweets")
+app.use("/api/tweets", tweets)
 // Need a users route, documents route
 
 app.use(express.static("./frontend/public"));
