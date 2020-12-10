@@ -3,6 +3,10 @@ const bcrypt = require("bcryptjs");
 const {Schema} = mongoose;
 
 const userSchema = new Schema({
+  "email": {
+    "type": String,
+    "required": true
+  },
   "username": {
     "type": String,
     "required": true,
@@ -11,6 +15,10 @@ const userSchema = new Schema({
   "password": {
     "type": String,
     "required": true
+  }, // change to ENUM
+  "role": {
+    "type": String,
+    "default": "admin"
   },
   "avi": {
     "type": String,

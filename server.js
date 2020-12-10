@@ -46,6 +46,9 @@ const port = process.env.PORT || 3000;
 // Import routes
 const tweets = require("./routes/tweets")
 app.use("/api/tweets", tweets)
+
+const users = require("./routes/users")
+app.use("/api/users", users)
 // Need a users route, documents route
 
 app.use(express.static("./frontend/public"));

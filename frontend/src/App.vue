@@ -1,7 +1,7 @@
 <template>
   <div id="app">
    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0 hover" @click="showSign">Its All Real</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0 hover" @click="showSign">Its All Real<i class="fas fa-globe margin-left" @click="goHome"></i></a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
           <a ref="signIn" class="nav-link" href="#" v-show="showSignin" @click="goSignIn">Sign In</a>
@@ -29,6 +29,9 @@ export default {
     },
     goSignIn () {
       this.$router.push({ name: 'Login' })
+    },
+    goHome () {
+      this.$router.push({ name: 'Map' })
     }
   }
 }
@@ -84,6 +87,10 @@ body {
   width: 16px;
   height: 16px;
   vertical-align: text-bottom;
+}
+
+.margin-left{
+  margin-left: 10px;
 }
 
 /*

@@ -6,12 +6,12 @@ const User = require("./models/user");
 const LocalStrategy = require("passport-local").Strategy;
 
 passport.use(new LocalStrategy({
-  "usernameField": "username"
-}, async (username, password, done) => {
+  "usernameField": "email"
+}, async (email, password, done) => {
   try {
     // Find the user given the email
     let user = await User.findOne({
-     username 
+     email 
     });
     // If not, handle it
 

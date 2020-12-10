@@ -45,7 +45,7 @@
       </div>
       <button
         id="signinButton"
-        @click="loginUser()"
+        @click="checkSigninValue()"
         class="btn btn-lg btn-primary btn-block"
         type="submit"
       >
@@ -53,7 +53,7 @@
       </button>
       <button
         id="signupButton"
-        @click="createUser()"
+        @click="checkUserValue()"
         class="btn btn-lg btn-info btn-block d-none"
         type="submit"
       >
@@ -66,12 +66,14 @@
 <script>
 import axios from 'axios'
 axios.defaults.withCredentials = true
+import { mapActions } from 'vuex'
 export default {
   name: 'loginPage',
   data: function () {
     return {
       signUp: false,
       user: {
+        email: '',
         username: '',
         password: ''
       },
@@ -79,45 +81,15 @@ export default {
     }
   },
   methods: {
-    async loginUser () {
-      var data = {
-        email: this.user.email,
-        password: this.user.password
-      }
-      const res = await axios.post(
-        'https://localhost:3000/api/users/signin',
-        data,
-        {
-          withCredentials: true
-        }
-      )
-      if (res.status === 200) {
-        sessionStorage.setItem('userData', JSON.stringify(res.data))
-        this.$router.push('/home')
-      }
+    ...mapActions({
+      signUp: 'user/signUp',
+      signIn: 'user/signIn'
+    }),
+    checkUserValue () {
+      if (!this.user.password) { return alert('Fill Required fields') } else if (!this.user.username) { return alert('Fill Required fields') } else if (!this.user.email) { return alert('Fill Required fields') } else { this.signUp(this.user); this.$router.push({ 'name': 'Map'})}
     },
-    async createUser () {
-      var data = {
-        email: this.user.email,
-        username: this.user.username,
-        password: this.user.password
-      }
-      if (data.email.includes('@')) {
-        const res = await axios.post(
-          'https://localhost:3000/api/users/signup',
-          data,
-          {
-            withCredentials: true
-          }
-        )
-        if (res.status === 200) {
-          console.log(res.data)
-          sessionStorage.setItem('userData', JSON.stringify(res.data))
-          this.$router.push('/home')
-        }
-      } else {
-        console.log('Incorrect Email Format')
-      }
+    checkSigninValue () {
+      if (!this.user.password) { return alert('Fill Required fields') } else if (!this.user.email) { return alert('Fill Required fields') } else { this.signIn({'email': this.user.email, 'password': this.user.password}); this.$router.push({ 'name': 'Map'}) }
     },
     getDate () {
       window.onload = function () {
