@@ -2,6 +2,8 @@ import Vue from 'vue'
 import createPersistedState from 'vuex-persistedstate'
 import Vuex from 'vuex'
 import user from './user'
+import tweets from './tweet'
+import router from '../router'
 
 Vue.use(Vuex)
 
@@ -23,6 +25,7 @@ export default new Vuex.Store({
   getters: {
   },
   modules: {
-    user
+    user,
+    tweets
   }
 })

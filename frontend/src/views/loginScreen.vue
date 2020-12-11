@@ -65,8 +65,8 @@
 </template>
 <script>
 import axios from 'axios'
-axios.defaults.withCredentials = true
 import { mapActions } from 'vuex'
+axios.defaults.withCredentials = true
 export default {
   name: 'loginPage',
   data: function () {
@@ -86,10 +86,10 @@ export default {
       signIn: 'user/signIn'
     }),
     checkUserValue () {
-      if (!this.user.password) { return alert('Fill Required fields') } else if (!this.user.username) { return alert('Fill Required fields') } else if (!this.user.email) { return alert('Fill Required fields') } else { this.signUp(this.user); this.$router.push({ 'name': 'Map'})}
+      if (!this.user.password) { return alert('Fill Required fields') } else if (!this.user.username) { return alert('Fill Required fields') } else if (!this.user.email) { return alert('Fill Required fields') } else { this.signUp(this.user); this.$router.push({ name: 'Map' }) }
     },
     checkSigninValue () {
-      if (!this.user.password) { return alert('Fill Required fields') } else if (!this.user.email) { return alert('Fill Required fields') } else { this.signIn({'email': this.user.email, 'password': this.user.password}); this.$router.push({ 'name': 'Map'}) }
+      if (!this.user.password) { return alert('Fill Required fields') } else if (!this.user.email) { return alert('Fill Required fields') } else { this.signIn({ email: this.user.email, password: this.user.password }); this.$router.push({ name: 'Map' }) }
     },
     getDate () {
       window.onload = function () {

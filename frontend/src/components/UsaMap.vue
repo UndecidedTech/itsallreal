@@ -1,5 +1,6 @@
 <template>
   <div class="">
+    <button class="btn btn-secondary float-right" @click="clearFilter">Reset</button>
     <radio-svg-map :map="USA" v-model="selectedLocation" :location-class="getLocationClass"/>
   </div>
 </template>
@@ -7,7 +8,7 @@
 <script>
 import { RadioSvgMap } from 'vue-svg-map'
 import USA from '@svg-maps/usa'
-
+import { mapActions } from 'vuex'
 export default {
   name: 'UsaMap',
   components: {
@@ -72,14 +73,19 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      setState: 'tweets/setState',
+      getTweets: 'tweets/getTweets'
+    }),
+    clearFilter () {
+      this.selectedLocation = null
+    },
     getLocationClass (location, index) {
       // set Red or Blue
       let state
-      console.log('locationID: ', location.id)
       for (let i = 0; i < this.statesRef.length; i++) {
         if (this.statesRef[i].state === location.id.toUpperCase()) {
           state = this.statesRef[i]
-          console.log('state: ', state, state.status)
           if (state.status === 'red') {
             return 'svg-map__red'
           } else if (state.status === 'blue') {
@@ -91,8 +97,14 @@ export default {
       }
     }
   },
+  watch: {
+    selectedLocation: function () {
+      console.log(this.selectedLocation)
+      this.setState(this.selectedLocation)
+      this.getTweets()
+    }
+  },
   mounted () {
-    console.log(this.USA)
   }
 }
 </script>

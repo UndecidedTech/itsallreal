@@ -1,3 +1,4 @@
+/* eslint-disable strict */
 require("dotenv").config();
 const Twitter = require("twitter");
 const express = require("express");
@@ -93,11 +94,16 @@ router.post("", async(req, res) => {
 
 
 router.get("/", async (req, res) => {
-  let tweetsList = await Tweet.find()
-  console.log(tweetsList);
-  
+  const {state} = req.query;
+  let tweetsList = [];
+  if (state) {
+    tweetsList = await Tweet.find({state});
+  } else {
+    tweetsList = await Tweet.find();
+  }
+
   res.send(tweetsList);
 
-})
+});
 
 module.exports = router;

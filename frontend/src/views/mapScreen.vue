@@ -27,6 +27,13 @@
 
         <main role="main" class="col-md-8 ml-sm-auto col-lg-8">
           <usa-map class="mapStyle" width="400" height="300" ></usa-map>
+          <div class="row" v-if="user.role === 'admin'">
+              <h1 class="pl-5">Upload Tweet</h1>
+          </div>
+          <div class="row pb-4 pl-3" v-if="user.role === 'admin'">
+            <input type="text" class="form-control col-6" placeholder="Tweet URL">
+            <mutli-select class="col-6"/>
+          </div>
           <div class="pl-4 pr-4 border rounded border-secondary chat">
             <div v-for="(tweet, index) in tweets" :key="index" class="card border-primary mt-3 mb-3" style="min-width:100%;">
               <div class="card-header">
@@ -72,11 +79,13 @@
 
 <script>
 import UsaMap from '../components/UsaMap.vue'
-import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
+import MutliSelect from '../components/mutliSelect.vue'
 export default {
   name: 'mapScreen',
   components: {
-    UsaMap
+    UsaMap,
+    MutliSelect
   },
   data () {
     return {
@@ -84,17 +93,20 @@ export default {
       showSignin: false,
       articles: [{
         title: 'Trump Case Makes Supreme Court'
-      }],
-      tweets: []
+      }]
     }
   },
   methods: {
-    async getTweets () {
-      const res = await axios.get('/api/tweets')
-      if (res.status === 200) {
-        this.tweets = res.data
-      }
-    }
+    ...mapActions({
+      getTweets: 'tweets/getTweets',
+      uploadTweet: 'tweets/uploadTweet'
+    })
+  },
+  computed: {
+    ...mapGetters({
+      user: 'user/user',
+      tweets: 'tweets/tweets'
+    })
   },
   created () {
     this.getTweets()
